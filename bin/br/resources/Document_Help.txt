@@ -1,0 +1,61 @@
+===================================================
+ AJUDA - SISTEMA DE VOTAÇÃO DISTRIBUÍDA (SI400)
+===================================================
+
+Este sistema é dividido em dois módulos: Servidor e Cliente.
+
+---
+1. INSTRUÇÕES DO SERVIDOR
+---
+
+O Servidor é responsável por gerenciar a eleição, receber os votos e gerar o relatório final.
+
+PASSO 1: INICIAR O SERVIDOR
+   - Execute a classe 'ServerMain.java'.
+
+PASSO 2: CARREGAR UMA ELEIÇÃO
+   - Na janela do Servidor, vá ao menu: [Servidor] -> [Carregar Eleição...].
+   - Você será solicitado a inserir a PERGUNTA da eleição (ex: "Qual a melhor linguagem de programação?").
+   - Em seguida, insira as OPÇÕES, separadas por VÍRGULA (ex: "Java,Python,C++,JavaScript").
+
+PASSO 3: INICIAR A VOTAÇÃO
+   - Vá ao menu: [Servidor] -> [Iniciar Servidor].
+   - Digite a PORTA em que o servidor deve escutar (ex: 9876).
+   - O servidor agora está online e aceitando conexões.
+
+PASSO 4: MONITORAR
+   - O painel "Log de Atividade" mostrará cada conexão e cada voto recebido.
+   - O gráfico de "Resultados Parciais" será atualizado em tempo real a cada novo voto.
+
+PASSO 5: ENCERRAR E SALVAR
+   - Quando desejar encerrar a votação, vá ao menu: [Servidor] -> [Parar e Salvar Relatório].
+   - O servidor deixará de aceitar novos votos.
+   - Uma janela de "Salvar" aparecerá para que você possa salvar o arquivo 'Relatorio_Votacao.txt'.
+   - Este arquivo conterá o resultado final e a lista de votantes (CPF e voto).
+
+---
+2. INSTRUÇÕES DO CLIENTE
+---
+
+O Cliente é usado pelos eleitores para se conectar ao servidor e registrar seu voto. Você pode executar várias instâncias do cliente (idealmente em máquinas diferentes).
+
+PASSO 1: INICIAR O CLIENTE
+   - Execute a classe 'ClientMain.java'.
+
+PASSO 2: CONECTAR
+   - Na janela do Cliente, digite o "IP" do servidor (ex: "127.0.0.1" se estiver na mesma máquina, ou o IP de rede do servidor).
+   - Digite a "Porta" que o servidor está usando (ex: 9876).
+   - Clique em [Conectar].
+   - O sistema buscará a pergunta e as opções de voto no servidor.
+
+PASSO 3: VOTAR
+   - Digite um CPF válido (com 11 dígitos, com ou sem pontuação).
+   - Selecione uma das opções de voto que apareceram.
+   - Clique em [VOTAR].
+
+PASSO 4: CONFIRMAÇÃO
+   - Você receberá uma mensagem de confirmação:
+      - "Voto computado com sucesso!": Seu voto foi registrado.
+      - "Este CPF já votou...": O servidor impede votos duplicados.
+      - "CPF inválido...": O CPF não passou na validação.
+   - Após o voto ser finalizado (com sucesso ou duplicado), a interface do cliente é travada.
