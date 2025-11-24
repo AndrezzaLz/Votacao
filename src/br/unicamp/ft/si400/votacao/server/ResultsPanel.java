@@ -8,22 +8,16 @@ import javax.swing.JPanel;
 import java.awt.Graphics2D;
 import java.util.LinkedHashMap;
 
-/**
- * Painel customizado para exibir os resultados da votação
- * em forma de gráfico de barras.
- */
+//exibir resultado em grafico de barrar
 class ResultsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private final Map<String, Integer> results;
 
     public ResultsPanel() {
-        this.results = new LinkedHashMap<>(); // Mantém a ordem de inserção
+        this.results = new LinkedHashMap<>();
         setBackground(Color.WHITE);
     }
 
-    /**
-     * Define as opções iniciais (com 0 votos).
-     */
     public void setOptions(java.util.List<String> options) {
         results.clear();
         for (String option : options) {
@@ -32,11 +26,8 @@ class ResultsPanel extends JPanel {
         repaint();
     }
 
-    /**
-     * Atualiza o mapa de resultados e redesenha o painel.
-     */
+
     public void updateResults(Map<String, Integer> newResults) {
-        // Atualiza mantendo a ordem
         newResults.forEach((option, count) -> {
             if (results.containsKey(option)) {
                 results.put(option, count);
@@ -45,9 +36,7 @@ class ResultsPanel extends JPanel {
         repaint();
     }
     
-    /**
-     * Limpa os resultados (para nova eleição).
-     */
+
     public void clear() {
         results.clear();
         repaint();
@@ -73,26 +62,24 @@ class ResultsPanel extends JPanel {
 
         g2d.setFont(new Font("Arial", Font.BOLD, 12));
         
-        // Desenha as barras
+
         for (Map.Entry<String, Integer> entry : results.entrySet()) {
             int votes = entry.getValue();
             int barHeight = (int) (((double) votes / maxVotes) * maxHeight);
             
-            g2d.setColor(Color.BLUE);
+            g2d.setColor(Color.MAGENTA);
             g2d.fillRect(x, yAxis - barHeight, barWidth, barHeight);
             
-            // Desenha o rótulo da opção
+
             g2d.setColor(Color.BLACK);
             g2d.drawString(entry.getKey(), x, yAxis + 15);
             
-            // Desenha a contagem de votos
-            g2d.setColor(Color.RED);
+            g2d.setColor(Color.DARK_GRAY);
             g2d.drawString(String.valueOf(votes), x + barWidth / 2 - 5, yAxis - barHeight - 5);
             
             x += (barWidth + spacing);
         }
         
-        // Desenha eixo Y
         g2d.setColor(Color.BLACK);
         g2d.drawLine(30, yAxis, 30, 40);
         g2d.drawLine(30, yAxis, getWidth() - 30, yAxis);
