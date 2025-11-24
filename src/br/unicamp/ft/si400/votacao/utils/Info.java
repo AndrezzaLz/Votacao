@@ -7,31 +7,21 @@ import javax.imageio.ImageIO;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-/**
- * Classe final (utility) para armazenar informações estáticas sobre o sistema.
- * Reutilizada do projeto de exemplo e adaptada para o "Votação Distribuída".
- */
+
 public final class Info {
-    // Constantes públicas com informações do sistema (adaptadas para o projeto)
-    public static final String author = "Prof. Andre F. de Angelis"; // Mantido do exemplo
+    public static final String author = "Prof. Andre F. de Angelis"; 
     public static final String sysName = "Sistema de Votação Distribuída"; //
     public static final String copyRight = "Copyright \u00A9 2025. " + author + ". All rights reserved.";
     public static final String mission = "Projeto de Si400 para implementar um sistema de votação cliente-servidor."; //
     public static final String date = "November, 2025 (Ver 1.0: November, 2020)";
     public static final String version = "Ver. 1.0";
 
-    // Constantes privadas para caminhos de recursos
-    // [!] IMPORTANTE: Crie a pasta 'resources' na raiz do seu classpath (ex: 'src/resources')
-    // e adicione os arquivos 'Unicamp_logo.jpg', 'Document_Help.txt' e 'Document_Disclaimer.txt'.
     private static final String ResFolder = "/resources/";
     private static final String HelpFile = "Document_Help.txt";
     private static final String DisclaimerFile = "Document_Disclaimer.txt";
     private static final String logoFile = "Unicamp_logo.jpg";
     private static Image logoImage = null;
 
-    /**
-     * Gera o texto formatado para a tela "Sobre".
-     */
     public static String getAboutText() {
         StringBuilder finalText = new StringBuilder();
         finalText.append("\n");
@@ -41,29 +31,22 @@ public final class Info {
         finalText.append("\n");
         finalText.append(mission + "\n");
         finalText.append("\n");
-        finalText.append("Baseado no código de: " + author + "\n"); // Crédito mantido
+        finalText.append("Baseado no código de: " + author + "\n");
         finalText.append("\n");
         finalText.append(copyRight + "\n");
         return (finalText.toString());
     }
 
-    /**
-     * Carrega o texto do arquivo de Disclaimer.
-     */
+
     public static String getDisclaimerText() {
         return (getTextFromResourceFile(ResFolder + DisclaimerFile));
     }
 
-    /**
-     * Carrega o texto do arquivo de Ajuda.
-     */
+
     public static String getHelpText() {
         return (getTextFromResourceFile(ResFolder + HelpFile));
     }
 
-    /**
-     * Carrega a imagem do logo (cacheada).
-     */
     public static Image getLogoImage() {
         if (logoImage == null) {
             try {
@@ -73,9 +56,9 @@ public final class Info {
                 }
                 logoImage = ImageIO.read(auxURL);
             } catch (final IOException e) {
-                System.out.println(Info.getLongVersion() + "\nLogo image not found. " + e.getMessage());
+                System.out.println(Info.getLongVersion() + "\nLogo não encontrada. " + e.getMessage());
             } catch (Exception e) {
-                System.out.println(Info.getLongVersion() + "\nError in loading logo image. " + e.getMessage());
+                System.out.println(Info.getLongVersion() + "\nErro ao carregar a logo. " + e.getMessage());
             }
         }
         return (logoImage);
@@ -89,10 +72,6 @@ public final class Info {
         return (version + " - " + date);
     }
 
-    /**
-     * Método auxiliar para ler um arquivo de texto do classpath.
-     * Reutilizado do projeto de exemplo.
-     */
     private static String getTextFromResourceFile(String fileName) {
         StringBuilder finalText = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Info.class.getResourceAsStream(fileName)))) {
