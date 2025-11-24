@@ -3,10 +3,7 @@ package br.unicamp.ft.si400.votacao.client;
 import javax.swing.SwingUtilities;
 import br.unicamp.ft.si400.votacao.utils.Info;
 
-/**
- * Ponto de entrada (main) para a aplicação do Cliente.
- * Inicia a GUI na Event Dispatch Thread (EDT).
- */
+// roda esse pra iniciar
 public class ClientMain implements Runnable {
 
     public static final int EXIT_SUCCESS = 0;
@@ -24,7 +21,6 @@ public class ClientMain implements Runnable {
 
     @Override
     public void run() {
-        // Cria e exibe a janela principal do cliente
         ClientGUI program = new ClientGUI(Info.sysName + " - Cliente");
         program.go();
     }
