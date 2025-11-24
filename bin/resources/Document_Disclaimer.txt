@@ -1,0 +1,24 @@
+===================================================
+    AVISOS E CRÉDITOS DO PROJETO
+===================================================
+
+AVISO DE USO
+-----------------
+Este software ("Sistema de Votação Distribuída") é um projeto acadêmico desenvolvido para a disciplina Si400 - Programação Orientada a Objetos II, da Faculdade de Tecnologia (FT) da UNICAMP.
+
+Este sistema NÃO DEVE SER UTILIZADO em um ambiente de produção ou para qualquer eleição real. Ele foi criado apenas para fins educacionais e de demonstração.
+
+Os desenvolvedores não se responsabilizam por qualquer uso indevido, falha de segurança ou perda de dados decorrente da utilização deste software.
+
+CRÉDITOS
+-----------------
+Este projeto foi desenvolvido por:
+
+   - Adriano
+   - Andrezza
+   - Dandara
+   - Mirella
+   - Sidinei
+   - Yasmin
+
+A estrutura base da interface gráfica (GUI), incluindo as classes 'Info', 'MsgScreen' e 'LogoPanel', foi adaptada do projeto "Master GUI" (2020-2025), fornecido pelo Prof. Andre F. de Angelis.
