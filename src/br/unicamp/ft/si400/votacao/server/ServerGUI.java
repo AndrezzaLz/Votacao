@@ -13,21 +13,12 @@ import java.awt.event.ActionListener;
 import br.unicamp.ft.si400.votacao.utils.Info;
 import br.unicamp.ft.si400.votacao.utils.MsgScreen;
 
-/**
- * Janela principal (JFrame) da interface gráfica do servidor. [cite: 36]
- * Baseada na estrutura de 'MainWindow.java'.
- * * Responsável por:
- * - Iniciar/Parar o servidor de rede.
- * - Carregar os dados da eleição. [cite: 19]
- * - Exibir logs e resultados gráficos. [cite: 22]
- * - Salvar o relatório final. [cite: 23]
- */
+//janela principal da interface do server
 class ServerGUI extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    private ServerNetwork serverNetwork; // O objeto que gerencia a rede
+    private ServerNetwork serverNetwork;
 
-    // --- Componentes da GUI ---
     private JMenuBar menuBar;
     private JMenu menuServidor;
     private JMenu menuAjuda;
@@ -39,12 +30,10 @@ class ServerGUI extends JFrame implements ActionListener {
     private JMenuItem menuItemSobre;
     
     private JTextArea logArea;
-    private ResultsPanel resultsPanel; // Painel para resultados gráficos
+    private ResultsPanel resultsPanel;
     private JLabel statusLabel;
 
-    /**
-     * Construtor da GUI do Servidor.
-     */
+
     ServerGUI(String title) throws HeadlessException {
         super(title);
         setupWindow();
@@ -54,9 +43,7 @@ class ServerGUI extends JFrame implements ActionListener {
         this.setStatus("Servidor parado. Carregue uma eleição para começar.");
     }
 
-    /**
-     * Configura a janela principal.
-     */
+
     private void setupWindow() {    
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
@@ -70,28 +57,22 @@ class ServerGUI extends JFrame implements ActionListener {
         }
     }
 
-    /**
-     * Configura os painéis centrais (Log e Gráfico).
-     */
+
     private void setupPanels() {
-        // Painel de Log
         logArea = new JTextArea();
         logArea.setEditable(false);
         logArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane logScrollPane = new JScrollPane(logArea);
-        logScrollPane.setBorder(BorderFactory.createTitledBorder("Log de Atividade"));
+        logScrollPane.setBorder(BorderFactory.createTitledBorder("Log de atividade"));
 
-        // Painel de Resultados Gráficos [cite: 22]
         resultsPanel = new ResultsPanel();
-        resultsPanel.setBorder(BorderFactory.createTitledBorder("Resultados Parciais"));
-        resultsPanel.setPreferredSize(new Dimension(0, 200)); // Altura fixa
+        resultsPanel.setBorder(BorderFactory.createTitledBorder("Resultados parciais"));
+        resultsPanel.setPreferredSize(new Dimension(0, 200));
 
-        // Split Pane para dividir Log e Gráfico
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, logScrollPane, resultsPanel);
-        splitPane.setResizeWeight(0.7); // 70% para o log
+        splitPane.setResizeWeight(0.7);
         this.add(splitPane, BorderLayout.CENTER);
 
-        // Painel de Status (reutilizado de MainWindow)
         JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusLabel = new JLabel("Status:");
         statusPanel.add(statusLabel);
@@ -99,21 +80,18 @@ class ServerGUI extends JFrame implements ActionListener {
         this.add(statusPanel, BorderLayout.SOUTH);
     }
 
-    /**
-     * Configura a barra de menus.
-     */
+
     private void setupMenus() {
         menuBar = new JMenuBar();
 
-        // Menu "Servidor"
         menuServidor = new JMenu("Servidor");
         menuServidor.setMnemonic('S');
         
-        menuItemCarregar = new JMenuItem("Carregar Eleição...", 'C');
-        menuItemIniciar = new JMenuItem("Iniciar Servidor", 'I');
-        menuItemIniciar.setEnabled(false); // Desabilitado até carregar eleição
-        menuItemPararSalvar = new JMenuItem("Parar e Salvar Relatório", 'P');
-        menuItemPararSalvar.setEnabled(false); // Desabilitado até iniciar
+        menuItemCarregar = new JMenuItem("Carregar eleição...", 'C');
+        menuItemIniciar = new JMenuItem("Iniciar servidor", 'I');
+        menuItemIniciar.setEnabled(false);
+        menuItemPararSalvar = new JMenuItem("Parar e salvar relatório", 'P');
+        menuItemPararSalvar.setEnabled(false);
         menuItemSair = new JMenuItem("Sair", 'R');
 
         menuServidor.add(menuItemCarregar);
@@ -122,10 +100,9 @@ class ServerGUI extends JFrame implements ActionListener {
         menuServidor.addSeparator();
         menuServidor.add(menuItemSair);
 
-        // Menu "Ajuda" (Reutilizado) 
         menuAjuda = new JMenu("Ajuda");
         menuAjuda.setMnemonic('A');
-        menuItemAjuda = new JMenuItem("Tópicos de Ajuda", 'T');
+        menuItemAjuda = new JMenuItem("Tópicos de ajuda", 'T');
         menuItemSobre = new JMenuItem("Sobre...", 'S');
         
         menuAjuda.add(menuItemAjuda);
@@ -136,11 +113,8 @@ class ServerGUI extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
-    /**
-     * Vincula os ActionListeners aos menus.
-     */
+
     private void bindMenus() {
-        // Vincula todos os JMenuItems ao 'this' (ActionListener)
         for (Component menu : menuBar.getComponents()) {
             if (menu instanceof JMenu jMenu) {
                 for (Component item : jMenu.getMenuComponents()) {
@@ -152,9 +126,7 @@ class ServerGUI extends JFrame implements ActionListener {
         }
     }
 
-    /**
-     * Manipulador central de ações dos menus.
-     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -168,45 +140,37 @@ class ServerGUI extends JFrame implements ActionListener {
         } else if (source == menuItemPararSalvar) {
             actionStopServerAndSave();
         } else if (source == menuItemAjuda) {
-            // Reutiliza MsgScreen 
             new MsgScreen(this, "Ajuda - " + Info.getShortVersion(), Info.getHelpText());
         } else if (source == menuItemSobre) {
-            // Reutiliza MsgScreen 
             new MsgScreen(this, "Sobre - " + Info.getShortVersion(), Info.getAboutText());
         }
     }
 
-    /**
-     * Ação: Carrega os dados da eleição [cite: 19]
-     */
+
     private void actionLoadElection() {
-        // (Em um projeto real, isso poderia vir de um arquivo)
-        // Por simplicidade, usamos JOptionPane
-        String pergunta = JOptionPane.showInputDialog(this, "Digite a pergunta da eleição:", "Carregar Eleição", JOptionPane.PLAIN_MESSAGE);
+
+        String pergunta = JOptionPane.showInputDialog(this, "Digite a pergunta da eleição:", "Carregar eleição", JOptionPane.PLAIN_MESSAGE);
         if (pergunta == null || pergunta.trim().isEmpty()) return;
 
-        String opcoesStr = JOptionPane.showInputDialog(this, "Digite as opções, separadas por vírgula (,)", "Carregar Eleição", JOptionPane.PLAIN_MESSAGE);
+        String opcoesStr = JOptionPane.showInputDialog(this, "Digite as opções, separadas por vírgula (,)", "Carregar eleição", JOptionPane.PLAIN_MESSAGE);
         if (opcoesStr == null || opcoesStr.trim().isEmpty()) return;
 
         List<String> opcoes = List.of(opcoesStr.split(","));
         opcoes = opcoes.stream().map(String::trim).toList();
 
-        // Cria a instância do servidor de rede (mas ainda não inicia)
         this.serverNetwork = new ServerNetwork(this, pergunta, opcoes);
         
         log("Eleição carregada: " + pergunta);
         for (String op : opcoes) log("- " + op);
         
-        resultsPanel.setOptions(opcoes); // Configura o painel gráfico
+        resultsPanel.setOptions(opcoes); 
         
         menuItemCarregar.setEnabled(false);
         menuItemIniciar.setEnabled(true);
         setStatus("Eleição carregada. Pronto para iniciar o servidor.");
     }
 
-    /**
-     * Ação: Inicia o servidor de rede.
-     */
+
     private void actionStartServer() {
         if (serverNetwork == null) {
             JOptionPane.showMessageDialog(this, "Carregue uma eleição primeiro!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -216,7 +180,7 @@ class ServerGUI extends JFrame implements ActionListener {
         try {
             int porta = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite a porta do servidor:", "Iniciar Servidor", JOptionPane.PLAIN_MESSAGE, null, null, "9876").toString());
             
-            serverNetwork.startServer(porta); // Inicia a thread do servidor
+            serverNetwork.startServer(porta);
             
             menuItemIniciar.setEnabled(false);
             menuItemPararSalvar.setEnabled(true);
@@ -229,33 +193,28 @@ class ServerGUI extends JFrame implements ActionListener {
         }
     }
 
-    /**
-     * Ação: Para o servidor e salva o relatório final. [cite: 23]
-     */
+
     private void actionStopServerAndSave() {
         if (serverNetwork == null) return;
 
         serverNetwork.stopServer();
         log("Servidor parado. Aceitação de votos encerrada.");
         
-        menuItemIniciar.setEnabled(true); // Pode reiniciar se quiser
+        menuItemIniciar.setEnabled(true);
         menuItemPararSalvar.setEnabled(false);
-        menuItemCarregar.setEnabled(true); // Pode carregar nova eleição
+        menuItemCarregar.setEnabled(true);
         setStatus("Servidor parado. Salvando relatório...");
 
-        // Salvar Relatório [cite: 23]
         saveReport(serverNetwork.getResults(), serverNetwork.getVoterList());
         
-        this.serverNetwork = null; // Limpa para próxima eleição
+        this.serverNetwork = null;
         resultsPanel.clear();
     }
 
-    /**
-     * Salva o relatório final em um arquivo de texto.
-     */
+
     private void saveReport(Map<String, Integer> results, Map<String, String> voterList) {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Salvar Relatório Final");
+        fileChooser.setDialogTitle("Salvar relatório final");
         fileChooser.setSelectedFile(new File("Relatorio_Votacao.txt"));
 
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -289,9 +248,6 @@ class ServerGUI extends JFrame implements ActionListener {
         }
     }
 
-    /**
-     * Encerra o sistema.
-     */
     private void exitSystem() {
         if (serverNetwork != null && serverNetwork.isRunning()) {
             int res = JOptionPane.showConfirmDialog(this, 
@@ -301,39 +257,31 @@ class ServerGUI extends JFrame implements ActionListener {
             if (res == JOptionPane.YES_OPTION) {
                 actionStopServerAndSave();
             } else if (res == JOptionPane.CANCEL_OPTION) {
-                return; // Cancela a saída
+                return; 
             }
         }
-        System.exit(ServerMain.EXIT_SUCCESS); // (Usando a constante do projeto original)
+        System.exit(ServerMain.EXIT_SUCCESS); 
     }
 
-    /**
-     * Torna a janela visível.
-     */
+
     void go() {
         this.setVisible(true);
     }
 
-    /**
-     * Define a mensagem na barra de status (thread-safe).
-     */
+
     final void setStatus(String message) {
         SwingUtilities.invokeLater(() -> statusLabel.setText(message));
     }
     
-    /**
-     * Adiciona uma mensagem ao log (thread-safe).
-     */
+
     public final void log(String message) {
         SwingUtilities.invokeLater(() -> {
             logArea.append(message + "\n");
-            logArea.setCaretPosition(logArea.getDocument().getLength()); // Auto-scroll
+            logArea.setCaretPosition(logArea.getDocument().getLength());
         });
     }
     
-    /**
-     * Atualiza o painel gráfico de resultados (thread-safe). [cite: 22]
-     */
+
     public final void updateResults(Map<String, Integer> results) {
         SwingUtilities.invokeLater(() -> resultsPanel.updateResults(results));
     }
