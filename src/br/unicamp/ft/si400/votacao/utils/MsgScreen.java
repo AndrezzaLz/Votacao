@@ -19,11 +19,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.TitledBorder;
 
-/**
- * Janela de diálogo para exibir mensagens longas (Ajuda, Sobre, Disclaimer).
- * Reutilizada DIRETAMENTE do projeto de exemplo.
- * Identificadores em inglês. Texto da GUI (botão) em português.
- */
+
 public final class MsgScreen extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;
@@ -54,14 +50,13 @@ public final class MsgScreen extends JDialog implements ActionListener {
 
         add(scrollPane, BorderLayout.CENTER);
 
-        panelLogo = new LogoPanel(); // Reutiliza LogoPanel
+        panelLogo = new LogoPanel();
         panelLogo.setPreferredSize(new Dimension(200, 220));
         panelLogo.setBorder(new TitledBorder(new LineBorder(Color.gray), Info.sysName));
         panelLogo.setBackground(Color.white);
         add(panelLogo, BorderLayout.WEST);
 
         panelButton = new JPanel();
-        // O *texto* do botão pode ser em português 
         closeButton = new JButton("Fechar"); 
         closeButton.addActionListener(this);
         panelButton.add(closeButton);
@@ -76,7 +71,6 @@ public final class MsgScreen extends JDialog implements ActionListener {
     }
 
     private void formatTextArea() {
-        // (Método formatTextArea() idêntico ao original)
         textArea.setForeground(Color.black);
         textArea.setBackground(Color.white);
         textArea.setEditable(false);
