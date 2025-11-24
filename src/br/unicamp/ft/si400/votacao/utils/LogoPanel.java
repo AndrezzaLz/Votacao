@@ -5,10 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.awt.Graphics2D;
 
-/**
- * Painel customizado para desenhar a imagem do logo.
- * Reutilizado DIRETAMENTE do projeto de exemplo.
- */
+
 public final class LogoPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +13,7 @@ public final class LogoPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         final Graphics2D auxGraphics = (Graphics2D) g;
-        final Image auxImage = Info.getLogoImage(); // Carrega a imagem via Info
+        final Image auxImage = Info.getLogoImage(); 
         
         if (auxImage == null) {
             auxGraphics.drawString("Logo não encontrado", 10, 20);
